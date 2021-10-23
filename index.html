@@ -11,7 +11,7 @@
     <input text="text" name="name" id="name" placeholder="ingrese la expresion">
     <input type="button" value="calcular" onclick="leer()" id="send">
     
-     <canvas id="canvas" width="1000" height="500"></canvas>
+     <canvas id="canvas" width="1800" height="800"></canvas>
       
      <script>
  var image;
@@ -24,107 +24,125 @@
 var canvas = document.getElementById('canvas')
     if (canvas.getContext) {
       var ctx = canvas.getContext('2d');
-
+     
          function leer(){
-             ctx.clearRect(0, 0, canvas.width, canvas.height);
                var expression = document.getElementById("name").value;
-            /*
-               switch(expression){
-                   case "a" || "b": draw(expression);
-                   break;
-                   case "m+": draw2();
-                   break;
-                   case "n*": draw3();
-                   break;
-               }
-               */
+               var initialMovimentx = 100;
+               var initialMovimenty = 100;
 
-               if(param(expression)){
-                 draw(expression);
-               
-         }
+               var initialMovimentxx = 100;
+               var initialMovimentyy = 100;
+               var pointer = 369;
+               var counter = 0;
+              var chararr = Array.from(expression);
+               console.log(chararr);
+              
+                   chararr.forEach(element => {
+                    
+                     initialElement(element);
+                      initialMovimentx += 350;
+                  /*    
+                       switch(element){
+                           case "a": draw(element, initialMovimentx, initialMovimenty, initialMovimentxx, initialMovimentyy, pointer);
+                           initialMovimentxx = initialMovimentx + 39;
+                            initialMovimentyy += 39;
+                           break;
 
-      function draw(transition) {
-      ctx.beginPath();
-      ctx.arc(500,200,40,34.5,Math.PI*2,true); 
-      ctx.arc(60,200,40,0,Math.PI*2,true); 
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(20,200);
-      ctx.lineTo(-90,20);
-      ctx.stroke();
+                           case "+": 
+                           var x = 420;
+                           var y = 340;
+                           initialElement(element, x, y);
+                           ctx.moveTo(137, 110);
+                           ctx.lineTo(400, 300);
+                            
+                           break;
+                           
+                           case "b": 
+                           pointer +=350;
+                           draw(element, initialMovimentx, initialMovimenty, initialMovimentxx, initialMovimentyy, pointer);
+                           ctx.moveTo(760, 100);
+                           ctx.lineTo(490,100);
+                           ctx.stroke();
+                           break;
+                           case "c":
+                           pointer +=350;  
+                           draw(element, initialMovimentx, initialMovimenty, initialMovimentxx, initialMovimentyy, pointer);
+                           ctx.moveTo(760+350, 100);
+                           ctx.lineTo(839,100);
+                           ctx.stroke()
+                           break;
 
-      ctx.beginPath();
-      ctx.moveTo(20,200);
-      ctx.lineTo(-125,400);
-      ctx.stroke();
-      ctx.drawImage(image, 440, 191.3, 20, 20);
-    ctx.beginPath();
-      ctx.arc(500,200,40,34.5,Math.PI*2,true); 
-      ctx.arc(60,200,40,0,Math.PI*2,true); 
-      ctx.stroke();
-
-      ctx.beginPath();
-      ctx.font="20px Arial";
-      ctx.strokeText(transition, 250, 190);
-      ctx.strokeText("q1", 490, 200);
-      ctx.strokeText("q0", 50, 200);
-      ctx.stroke();
+                           case(param(element)):
+                             
+                       }
+                       */
+                          counter++;
+                       if(param(element)){
+                        draw(element, initialMovimentx, initialMovimenty, initialMovimentxx, initialMovimentyy, pointer);
+                           pointer +=350;
+                           initialMovimentxx = initialMovimentx + 39;
+                            initialMovimentyy += 39;
+                         if(counter == 2){
+                            ctx.moveTo(760, 100);
+                           ctx.lineTo(490,100);
+                           ctx.stroke();
+                           }if(counter == 3){
+                            ctx.moveTo(760+350, 100);
+                            ctx.lineTo(839,100);
+                            ctx.stroke();
+                           }
+                       }else{
+                            pointer = 90;
+                            draw(initialMovimentx, initialMovimenty, initialMovimentxx, initialMovimentyy, pointer);
+                          
+                       }
+                   });
     
+
+      function initialElement(element, x, y){
+            //initial movemennt
+           ctx.beginPath();
+           ctx.arc(initialMovimentx, initialMovimenty,40,34.5,Math.PI*2,true); 
+           ctx.arc(x,y, 40, 34.5, Math.PI*2,true);
+           ctx.stroke();
+                   }
+
+      function draw(transition, x, y, xx, yy, pointer) {
+        ctx.beginPath();
+        ctx.arc(x,100,40,34.5,Math.PI*2,true); 
+        ctx.stroke();
+        ctx.drawImage(image,pointer,80,40,40);
+        ctx.stroke();
+        ctx.closePath();
+        ctx.beginPath();
+     ctx.moveTo(139, 100);
+  // ctx.moveTo(760, 100);
+                  //moteTo(punto de inicio x, puntio de final y)
+      ctx.lineTo(400,100);
+  //   ctx.lineTo(490,100);
+                 //lineTo(tamanio en orizontal(x), tamanio en vertical(y));
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.font="20px Arial";
+      ctx.strokeText(transition, x-200, y-20);
+      }
+
+      function drawLines(xx, yy){
+     
+      }
     
-    }
   }
-
-  function draw2(){
-    ctx.drawImage(image, 440, 191.3, 20, 20);
-    ctx.drawImage(image2, 538, 191.3, 20, 20);
-    ctx.drawImage(image, 3, 191.3, 20, 20);
-    ctx.beginPath();
-      ctx.arc(500,200,40,34.5,Math.PI*2,true); 
-      ctx.arc(60,200,40,0,Math.PI*2,true); 
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.beginPath();
-      ctx.arc(560,155,50,2,Math.PI*1,true); 
-      ctx.stroke();
-
-      ctx.beginPath();
-      ctx.font="20px Arial";
-      ctx.strokeText("m", 250, 190);
-      ctx.strokeText("m", 520, 98);
-      ctx.strokeText("qo", 50, 200);
-      ctx.strokeText("qo", 490, 200);
-      
-  }
-
-  function draw3(){
-    ctx.drawImage(image2, 139, 191.3, 20, 20);
-    ctx.drawImage(image, 40, 191.3, 20, 20);
-    ctx.beginPath();
-      ctx.arc(100,200,40,30, Math.PI*2,true); 
-     ctx.stroke();
-     ctx.beginPath();
-      ctx.beginPath();
-      ctx.arc(160,155,50,2,Math.PI*1,true); 
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.font="20px Arial";
-      ctx.strokeText("n", 165, 100);
-      ctx.strokeText("qo", 90, 200);
-      
-  }
-
- 
 
   const param = (caracter) =>{
      var char = caracter.toLowerCase();
-     return (char.length = 1 && char >='a' && char <='z');
+     if(char.length = 1 && char >='a' && char <='z'){
+       return 1;
+     }else if(char.length = 2 && char >='a' && char <='z'){
+       console.log(hola)
+       return 2;
+     }
   }
 }
-
-
-
-
 
   </script>
 </body>
